@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class MyClient extends JFrame implements MouseListener, MouseMotionListener {
-	private JButton buttonArray[];//ボタン用の配列
+	private JButton[][] buttonArray;//ボタン用の配列
 	private Container c;
 	private ImageIcon blackIcon, whiteIcon, boardIcon;
 	private String[] deck = new String[5];
@@ -35,7 +35,7 @@ public class MyClient extends JFrame implements MouseListener, MouseMotionListen
 		//ウィンドウを作成する
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//ウィンドウを閉じるときに，正しく閉じるように設定する
 		setTitle("MyClient");//ウィンドウのタイトルを設定する
-		setSize(600, 500);//ウィンドウのサイズを設定する
+		setSize(800, 800);//ウィンドウのサイズを設定する
 		c = getContentPane();//フレームのペインを取得する
 
 		//アイコンの設定
@@ -45,18 +45,21 @@ public class MyClient extends JFrame implements MouseListener, MouseMotionListen
 
 		c.setLayout(null);//自動レイアウトの設定を行わない
 		//ボタンの生成
-		buttonArray = new JButton[10];//ボタンの配列を10個作成する[0]から[9]まで使える
-		for (int i = 0; i < 10; i++) {
-			buttonArray[i] = new JButton(boardIcon);//ボタンにアイコンを設定する
-			c.add(buttonArray[i]);//ペインに貼り付ける
-			if (i < 5) {
-				buttonArray[i].setBounds(i * 80 + 100, 140, 60, 60);//ボタンの大きさと位置を設定する．(x座標，y座標,xの幅,yの幅）
-				buttonArray[i].addMouseListener(this);//ボタンをマウスでさわったときに反応するようにする
-				buttonArray[i].setActionCommand(Integer.toString(i));//ボタンに配列の情報を付加する（ネットワークを介してオブジェクトを識別するため）
-			} else if (i > 4) {
-				buttonArray[i].setBounds((i - 5) * 80 + 100, 220, 60, 60);//ボタンの大きさと位置を設定する．(x座標，y座標,xの幅,yの幅）
-				buttonArray[i].addMouseListener(this);//ボタンをマウスでさわったときに反応するようにする
-				buttonArray[i].setActionCommand(Integer.toString(i));//ボタンに配列の情報を付加する（ネットワークを介してオブジェクトを識別するため）
+		buttonArray = new JButton[9][9];//ボタンの配列を10個作成する[0]から[9]まで使える
+		for (int i = 0; i < 9; i++) {
+			for(int j= 0;j<9;j++) {
+			buttonArray[i][j] = new JButton(boardIcon);//ボタンにアイコンを設定する
+			c.add(buttonArray[i][j]);//ペインに貼り付ける
+				if (i < 9) {
+					buttonArray[i][j].setBounds(i * 60 + 60, j*60+60, 60, 60);//ボタンの大きさと位置を設定する．(x座標，y座標,xの幅,yの幅）
+					buttonArray[i][j].addMouseListener(this);//ボタンをマウスでさわったときに反応するようにする
+					buttonArray[i][j].setActionCommand(Integer.toString(i));//ボタンに配列の情報を付加する（ネットワークを介してオブジェクトを識別するため）
+				}
+//					else if (i > 4) {
+//					buttonArray[i][j].setBounds((i - 5) * 80 + 100, 220, 60, 60);//ボタンの大きさと位置を設定する．(x座標，y座標,xの幅,yの幅）
+//					buttonArray[i][j].addMouseListener(this);//ボタンをマウスでさわったときに反応するようにする
+//					buttonArray[i][j].setActionCommand(Integer.toString(i));//ボタンに配列の情報を付加する（ネットワークを介してオブジェクトを識別するため）
+//				}
 			}
 		}
 
@@ -106,7 +109,7 @@ public class MyClient extends JFrame implements MouseListener, MouseMotionListen
 							int theBnum = Integer.parseInt(theBName);//ボタンの名前を数値に変換する
 							int x = Integer.parseInt(inputTokens[2]);//数値に変換する
 							int y = Integer.parseInt(inputTokens[3]);//数値に変換する
-							buttonArray[theBnum].setLocation(x, y);//指定のボタンを位置をx,yに設定する
+							buttonArray[theBnum][theBnum].setLocation(x, y);//指定のボタンを位置をx,yに設定する
 						}
 					} else {
 						break;
